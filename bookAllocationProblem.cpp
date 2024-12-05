@@ -3,6 +3,9 @@
 using namespace std;
 
 bool isValid(vector<int> &a, int n, int m, int allowedPages) {
+    if(m>n){
+        return -1;
+    }
     int stu = 1, pages = 0; 
     for (int i = 0; i < n; i++) {
         if (a[i] > allowedPages) {
@@ -13,12 +16,11 @@ bool isValid(vector<int> &a, int n, int m, int allowedPages) {
         } else { 
             stu++;
             pages = a[i];
-            if (stu > m) { 
-                return false;
-            }
         }
+        
     }
-    return true;
+  return stu>m?false:true;
+    
 }
 
 int allocatesBooks(vector<int> &a, int n, int m) {
@@ -30,8 +32,7 @@ int allocatesBooks(vector<int> &a, int n, int m) {
         sum += a[i];
     }
     int st = 0, end = sum;
-    int ans = -1;
-
+    int ans = 0;
     while (st <= end) {
         int mid = st + (end - st) / 2;
         if (isValid(a, n, m, mid)) {
